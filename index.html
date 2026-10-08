@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa de una Relación · Libro interactivo 2026</title>
+<style>
+:root{--bg:#f5f3ef;--card:#fff;--ink:#17212b;--muted:#66727d;--accent:#2f6f68;--accent2:#d8ece8;--warn:#b7791f;--danger:#b83232;--line:#dfe4e7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:linear-gradient(135deg,#183f3b,#2f6f68);color:white;padding:42px 20px}
+.wrap{max-width:900px;margin:auto}.tag{display:inline-block;background:#ffffff22;border:1px solid #ffffff44;border-radius:999px;padding:5px 12px;font-size:13px}
+h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin:16px 0 10px}h2{margin-top:0}h3{margin-bottom:6px}.sub{max-width:700px;color:#e6f2f0}
+main{padding:25px 16px 60px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin:16px 0;box-shadow:0 5px 20px #17302b0b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+button,.choice{border:1px solid var(--line);background:white;border-radius:12px;padding:13px 15px;cursor:pointer;font-weight:600}
+button.primary{background:var(--accent);color:white;border-color:var(--accent)}button:hover,.choice:hover{transform:translateY(-1px)}
+.choice{display:block;text-align:left;width:100%;margin:8px 0;font-weight:500}.choice input{margin-right:10px}
+.progress{height:9px;background:#e5e9ea;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--accent);transition:.3s}
+.question{padding:18px 0;border-top:1px solid var(--line)}.question:first-child{border-top:0}
+.small{font-size:13px;color:var(--muted)}.hidden{display:none}.score{font-size:42px;font-weight:800;color:var(--accent)}
+.alert{border-left:5px solid var(--danger);background:#fff0f0;padding:16px;border-radius:10px}.ok{border-left:5px solid var(--accent);background:#eef8f6;padding:16px;border-radius:10px}
+.barrow{display:grid;grid-template-columns:170px 1fr 50px;gap:10px;align-items:center;margin:10px 0}.meter{height:12px;background:#e7ebed;border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--accent)}
+footer{max-width:900px;margin:auto;padding:0 16px 40px;color:var(--muted);font-size:13px}
+details{border-top:1px solid var(--line);padding:12px 0}summary{cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<span class="tag">LIBRO INTERACTIVO · EDICIÓN 2026</span>
+<h1>Mapa de una Relación</h1>
+<div class="sub">Una guía de autoevaluación para comprender conexión, comunicación, confianza, autonomía, proyecto compartido y seguridad.</div>
+</div></header>
+
+<main class="wrap">
+<section class="card" id="intro">
+<h2>Antes de empezar</h2>
+<p>Esto es una herramienta educativa de <b>autoexploración</b>. No diagnostica trastornos, no determina si debes continuar o terminar una relación y no sustituye a un psicólogo, médico, orientador o servicio de protección.</p>
+<p>El modelo combina dimensiones inspiradas en investigación sobre relaciones de pareja y bienestar adolescente, pero las preguntas y la puntuación de este libro son propias.</p>
+<div class="grid">
+<div><b>Adolescentes</b><br><span class="small">13–17: enfoque en respeto, límites, seguridad, amistad y comunicación. Sin preguntas sexuales.</span></div>
+<div><b>Adultos</b><br><span class="small">18+: añade intimidad, proyecto de vida, confianza, conflicto y economía.</span></div>
+</div>
+<button class="primary" onclick="start()">Comenzar</button>
+</section>
+
+<section class="card hidden" id="setup">
+<h2>Perfil</h2>
+<p>Selecciona tu grupo. La edad solo adapta el contenido.</p>
+<div class="grid">
+<button onclick="setAge('teen')">13–17 años</button>
+<button onclick="setAge('adult')">18 años o más</button>
+</div>
+<p class="small">Si existe miedo, violencia, coerción, amenazas o control que te haga sentir en peligro, no necesitas esperar al resultado del test para buscar ayuda.</p>
+</section>
+
+<section class="card hidden" id="quiz">
+<h2>Autoevaluación</h2>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p class="small" id="counter"></p>
+<div id="questions"></div>
+<button class="primary" onclick="finish()">Ver mi perfil</button>
+</section>
+
+<section class="card hidden" id="result">
+<h2>Tu mapa relacional</h2>
+<div id="summary"></div>
+<div id="dimensions"></div>
+<div id="actions"></div>
+<button onclick="window.print()">Imprimir / guardar PDF</button>
+<button onclick="location.reload()">Repetir evaluación</button>
+</section>
+
+<section class="card">
+<h2>Capítulo: ¿Qué hace sana a una relación?</h2>
+<details><summary>1 · Seguridad</summary><p>Una relación saludable no necesita miedo, amenazas, coerción ni vigilancia constante. La seguridad física, emocional y digital es una condición básica, no una “dimensión secundaria”.</p></details>
+<details><summary>2 · Conexión</summary><p>Importan la amistad, el interés genuino, la escucha, el afecto y la sensación de que ambos pueden acercarse sin ser ridiculizados.</p></details>
+<details><summary>3 · Conflicto</summary><p>Una pareja sana no es una pareja que nunca discute. La diferencia está en cómo maneja el desacuerdo: escucha, pausa, reparación, responsabilidad y búsqueda de soluciones.</p></details>
+<details><summary>4 · Confianza y autonomía</summary><p>Confiar no significa saber dónde está la otra persona cada minuto. Una relación sana permite privacidad, amistades, intereses propios y límites.</p></details>
+<details><summary>5 · Proyecto compartido</summary><p>Los valores, dinero, familia, hijos, trabajo, vivienda y expectativas futuras no tienen que ser idénticos, pero sí suficientemente compatibles para conversar y negociar.</p></details>
+</section>
+
+<section class="card">
+<h2>Lectura responsable del resultado</h2>
+<p><b>Verde</b> significa que predominan recursos saludables en esta autoevaluación. <b>Amarillo</b> señala áreas que conviene conversar o mejorar. <b>Rojo</b> indica señales importantes que merecen atención.</p>
+<p>Una puntuación alta <b>no cancela</b> una señal crítica de violencia o coerción. En esos casos la seguridad tiene prioridad sobre cualquier promedio.</p>
+</section>
+</main>
+<footer>
+<b>Nota metodológica:</b> herramienta educativa original. No reproduce cuestionarios propietarios. Inspirada en marcos de investigación sobre salud relacional, conflicto, confianza, compromiso y bienestar adolescente.
+</footer>
+
+<script>
+const base=[
+["Conexión","Siento que mi pareja se interesa genuinamente por cómo estoy.","positive"],
+["Conexión","Podemos disfrutar tiempo juntos sin que todo tenga que ser extraordinario.","positive"],
+["Conexión","Cuando necesito hablar, siento que puedo acercarme sin ser ridiculizado/a.","positive"],
+["Comunicación","Podemos hablar de temas difíciles sin que la conversación termine automáticamente en ataques.","positive"],
+["Comunicación","Cuando me equivoco, puedo reconocerlo sin sentir que perderé todo el respeto de mi pareja.","positive"],
+["Comunicación","Mi pareja puede decirme que algo le molesta sin miedo a mi reacción.","positive"],
+["Conflicto","Después de una discusión, somos capaces de reparar el daño y retomar el diálogo.","positive"],
+["Conflicto","Durante los desacuerdos evitamos insultos, humillaciones y amenazas.","positive"],
+["Conflicto","Podemos hacer pausas cuando estamos muy alterados y volver al tema después.","positive"],
+["Confianza","Puedo tener amistades, intereses y espacios personales sin que eso sea interpretado como traición.","positive"],
+["Confianza","No necesito revisar constantemente el teléfono, ubicación o redes de mi pareja para sentir seguridad.","positive"],
+["Autonomía","Mi pareja respeta mis decisiones personales y mis límites.","positive"],
+["Valores","Podemos hablar de dinero, familia, trabajo y futuro aunque pensemos distinto.","positive"],
+["Compromiso","Siento que las decisiones importantes se toman considerando a ambos.","positive"],
+["Reciprocidad","Los esfuerzos para mantener la relación no recaen siempre en una sola persona.","positive"],
+["Digital","Los conflictos de la relación no se convierten en publicaciones, indirectas o exposición pública.","positive"],
+["Respeto","Puedo decir “no” a algo sin recibir castigos, amenazas o presión.","positive"],
+];
+const adult=[
+["Intimidad","Podemos hablar de afecto e intimidad con respeto, consentimiento y libertad para decir que no.","positive"],
+["Proyecto","Tenemos expectativas suficientemente compatibles sobre el futuro como para poder construir acuerdos.","positive"],
+["Economía","Podemos conversar sobre gastos, deudas y responsabilidades económicas sin usar el dinero como arma de control.","positive"],
+["Reparación","Cuando uno hiere al otro, existe una posibilidad real de reconocerlo, reparar y cambiar la conducta.","positive"],
+];
+const red=[
+["Seguridad","Alguna vez he sentido miedo de mi pareja.","red"],
+["Seguridad","Mi pareja me amenaza, intimida o usa información privada para controlarme.","red"],
+["Seguridad","Mi pareja intenta aislarme de familiares o amistades.","red"],
+["Seguridad","Me controla de manera excesiva mediante teléfono, ubicación, contraseñas o redes.","red"],
+["Seguridad","Me presiona para hacer algo que no quiero, aunque ya haya dicho que no.","red"],
+["Seguridad","Ha habido agresión física o destrucción de objetos para intimidarme.","red"]
+];
+const answers=["Nunca","Rara vez","A veces","Frecuentemente","Casi siempre"];
+let qs=[], age='', vals=[];
+function start(){document.getElementById('intro').classList.add('hidden');document.getElementById('setup').classList.remove('hidden')}
+function setAge(a){age=a;qs=[...base,...(a==='adult'?adult:[]),...red];render()}
+function render(){
+ document.getElementById('setup').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');
+ vals=Array(qs.length).fill(null);
+ document.getElementById('questions').innerHTML=qs.map((q,i)=>`<div class="question"><b>${i+1}. ${q[1]}</b>
+ ${answers.map((x,v)=>`<label class="choice"><input type="radio" name="q${i}" value="${v}" onchange="vals[${i}]=${v};progress()">${x}</label>`).join('')}</div>`).join('');
+ progress();
+}
+function progress(){let n=vals.filter(x=>x!==null).length;document.getElementById('bar').style.width=(n/qs.length*100)+'%';document.getElementById('counter').textContent=`${n} de ${qs.length} preguntas respondidas`}
+function finish(){
+ if(vals.some(x=>x===null)){alert('Completa todas las preguntas para obtener el perfil.');return}
+ let pos=qs.map((q,i)=>q[2]==='positive'?vals[i]:null).filter(x=>x!==null);
+ let reds=qs.map((q,i)=>q[2]==='red'?vals[i]:null).filter(x=>x!==null);
+ let dims={};
+ qs.forEach((q,i)=>{if(q[2]==='positive'){dims[q[0]]??=[];dims[q[0]].push(vals[i]);}});
+ let redCount=reds.filter(x=>x>=2).length;
+ let avg=pos.reduce((a,b)=>a+b,0)/pos.length;
+ let overall=Math.round(avg/4*100);
+ let level=redCount?'PRIORIDAD DE SEGURIDAD':overall>=75?'FORTALEZA RELACIONAL':overall>=55?'RELACIÓN CON ÁREAS A FORTALECER':'RELACIÓN CON NECESIDAD DE ATENCIÓN';
+ document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.remove('hidden');
+ document.getElementById('summary').innerHTML=`<div class="score">${overall}/100</div><h3>${level}</h3>
+ <p>${redCount?`Aparecen ${redCount} señales de seguridad que no deben quedar ocultas por el promedio general.`:'No aparecen señales críticas según las respuestas marcadas.'}</p>`;
+ let html='';
+ Object.entries(dims).forEach(([k,a])=>{let s=Math.round(a.reduce((x,y)=>x+y,0)/a.length/4*100);html+=`<div class="barrow"><b>${k}</b><div class="meter"><div class="fill" style="width:${s}%"></div></div><span>${s}</span></div>`});
+ document.getElementById('dimensions').innerHTML='<h3>Dimensiones</h3>'+html;
+ let advice=redCount?`<div class="alert"><b>Primero la seguridad.</b><br>Si existe miedo, coerción, agresión, amenazas o control grave, busca apoyo de una persona de confianza o un servicio profesional/local de protección. No uses este resultado para confrontar a una persona que pueda reaccionar con violencia.</div>`:
+ `<div class="ok"><b>Siguiente paso:</b> elige la dimensión más baja y conviértela en una conversación concreta: “¿Qué necesitaríamos cambiar durante las próximas 2 semanas para sentirnos mejor aquí?”</div>`;
+ document.getElementById('actions').innerHTML=advice;
+}
+</script>
+</body>
+</html>
